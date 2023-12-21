@@ -11,7 +11,8 @@ public class ClientSide
     {
          try
          {
-             s=new Socket("localhost",10);
+            String servername = "localhost";
+             s=new Socket(servername, 10);
              System.out.println(s);
              din= new DataInputStream(s.getInputStream());
              dout= new DataOutputStream(s.getOutputStream());
