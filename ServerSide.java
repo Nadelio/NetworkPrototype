@@ -47,3 +47,5 @@ public class ServerSide
          while(!s1.equals("bye"));
     }
 }
+
+// testing some things, this code is from: https://stackoverflow.com/questions/28308584/connecting-two-computers-for-client-server-communication-in-java
