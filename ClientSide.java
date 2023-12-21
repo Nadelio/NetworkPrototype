@@ -1,79 +1,44 @@
+//code for client
 import java.io.*;
 import java.net.*;
- 
-public class ClientSide {
- 
-    // initialize socket and input output streams
-    private Socket socket = null;
-    private BufferedReader input = null;
-    private DataOutputStream out = null;
- 
-    // constructor to put ip address and port
-    public ClientSide(String address, int port)
+
+public class ClientSide
+{
+    Socket s;
+    DataInputStream din;
+    DataOutputStream dout;
+    public ClientSide()
     {
- 
-        // establish a connection
-        try {
- 
-            socket = new Socket(address, port);
- 
-            System.out.println("Connected");
- 
-            // takes input from terminal
-            input = new BufferedReader(new InputStreamReader(System.in));
- 
-            // sends output to the socket
-            out = new DataOutputStream(
-                socket.getOutputStream());
-        }
- 
-        catch (UnknownHostException u) {
- 
-            System.out.println(u);
-        }
- 
-        catch (IOException i) {
- 
-            System.out.println(i);
-        }
- 
-        // string to read message from input
-        String line = "";
- 
-        // keep reading until "End" is input
-        while (!line.equals("End")) {
- 
-            try {
- 
-                line = input.readLine();
- 
-                out.writeUTF(line);
-            }
- 
-            catch (IOException i) {
- 
-                System.out.println(i);
-            }
-        }
- 
-        // close the connection
-        try {
- 
-            input.close();
- 
-            out.close();
- 
-            socket.close();
-        }
- 
-        catch (IOException i) {
- 
-            System.out.println(i);
-        }
+         try
+         {
+             s=new Socket("10.2.13.128",10);
+             System.out.println(s);
+             din= new DataInputStream(s.getInputStream());
+             dout= new DataOutputStream(s.getOutputStream());
+             ClientChat();
+         }
+         catch(Exception e)
+         {
+             System.out.println(e);
+         }
+     }
+     public void ClientChat() throws IOException
+     {
+           BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+           String s1;
+           do
+           {
+               s1=br.readLine();
+               dout.writeUTF(s1);
+               dout.flush();
+               System.out.println("Server Message:"+din.readUTF());
+           }
+           while(!s1.equals("stop"));
     }
- 
-    public static void main(String[] args)
+    public static void main(String as[])
     {
-        ClientSide client = new ClientSide("127.0.0.1", 5000);
+        new ClientSide(); 
     }
 }
+
+// testing some things, this code is from: https://stackoverflow.com/questions/28308584/connecting-two-computers-for-client-server-communication-in-java

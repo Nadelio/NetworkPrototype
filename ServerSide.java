@@ -1,69 +1,49 @@
+//code for server
 import java.io.*;
 import java.net.*;
- 
-public class ServerSide {
- 
-    // initialize socket and input stream
-    private Socket socket = null;
-    private ServerSocket server = null;
-    private DataInputStream in = null;
- 
-    // constructor with port
-    public ServerSide(int port)
+
+public class ServerSide
+{
+    ServerSocket ss;
+    Socket s;
+    DataInputStream dis;
+    DataOutputStream dos;
+    public ServerSide()
     {
- 
-        // starts server and waits for a connection
-        try {
-            server = new ServerSocket(port);
- 
-            System.out.println("Server started");
- 
-            System.out.println("Waiting for a client ...");
- 
-            socket = server.accept();
- 
-            System.out.println("Client accepted");
- 
-            // takes input from the client socket
-            in = new DataInputStream(
-                new BufferedInputStream(
-                    socket.getInputStream()));
- 
-            String line = "";
- 
-            // reads message from client until "End" is sent
-            while (!line.equals("End")) {
- 
-                try {
- 
-                    line = in.readUTF();
- 
-                    System.out.println(line);
-                }
- 
-                catch (IOException i) {
- 
-                    System.out.println(i);
-                }
-            }
- 
-            System.out.println("Closing connection");
- 
-            // close connection
-            socket.close();
- 
-            in.close();
+        try
+        {
+            System.out.println("Server Started");
+            ss=new ServerSocket(10);
+            s=ss.accept();
+            System.out.println(s);
+            System.out.println("CLIENT CONNECTED");
+            dis= new DataInputStream(s.getInputStream());
+            dos= new DataOutputStream(s.getOutputStream());
+            ServerChat();
         }
- 
-        catch (IOException i) {
- 
-            System.out.println(i);
+        catch(Exception e)
+        {
+             System.out.println(e);
         }
     }
- 
-    public static void main(String[] args)
+
+    public static void main (String as[])
     {
- 
-        ServerSide server = new ServerSide(5000);
+         new ServerSide();
+    }
+
+    public void ServerChat() throws IOException
+    {
+         String str, s1;
+         do
+         {
+             str=dis.readUTF();
+             System.out.println("Client Message:"+str);
+             BufferedReader br=new BufferedReader(new   InputStreamReader(System.in));
+             s1=br.readLine();
+             dos.writeUTF(s1);
+             dos.flush();
+         }
+         while(!s1.equals("bye"));
     }
 }
