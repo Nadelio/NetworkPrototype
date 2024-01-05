@@ -41,4 +41,4 @@ public class ClientSide
     }
 }
 
-// testing some things, this code is from: https://stackoverflow.com/questions/28308584/connecting-two-computers-for-client-server-communication-in-java
+// testing some things, this partial code is from: https://stackoverflow.com/questions/28308584/connecting-two-computers-for-client-server-communication-in-java
