@@ -42,3 +42,4 @@ public class ClientSide
 }
 
 // testing some things, this partial code is from: https://stackoverflow.com/questions/28308584/connecting-two-computers-for-client-server-communication-in-java
+// setup port forwarding on port 6, get an online server, get the ip of said server, input ip into code.
