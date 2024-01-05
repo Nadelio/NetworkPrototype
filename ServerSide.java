@@ -1,50 +1,49 @@
-//code for server
 import java.io.*;
 import java.net.*;
 
 public class ServerSide
 {
-    ServerSocket ss;
-    Socket s;
-    DataInputStream dis;
-    DataOutputStream dos;
+    ServerSocket serverSocket;
+    Socket socket;
+    DataInputStream dataInStream;
+    DataOutputStream dataOutStream;
     public ServerSide()
     {
         try
         {
             System.out.println("Server Started");
-            ss=new ServerSocket(10);
-            s=ss.accept();
-            System.out.println(s);
+            serverSocket = new ServerSocket(6);
+            socket = serverSocket.accept();
+            System.out.println(socket);
             System.out.println("CLIENT CONNECTED");
-            dis= new DataInputStream(s.getInputStream());
-            dos= new DataOutputStream(s.getOutputStream());
+            dataInStream = new DataInputStream(socket.getInputStream());
+            dataOutStream = new DataOutputStream(socket.getOutputStream());
             ServerChat();
         }
         catch(Exception e)
         {
-             System.out.println(e);
+            System.out.println(e);
         }
     }
 
     public static void main (String as[])
     {
-         new ServerSide();
+        new ServerSide();
     }
 
     public void ServerChat() throws IOException
     {
-         String str, s1;
-         do
-         {
-             str=dis.readUTF();
-             System.out.println("Client Message:"+str);
-             BufferedReader br=new BufferedReader(new   InputStreamReader(System.in));
-             s1=br.readLine();
-             dos.writeUTF(s1);
-             dos.flush();
-         }
-         while(!s1.equals("bye"));
+        String string, string1;
+        do
+        {
+            string = dataInStream.readUTF();
+            System.out.println("Client Message:"+string);
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            string1 = br.readLine();
+            dataOutStream.writeUTF(string1);
+            dataOutStream.flush();
+        }
+        while(!string1.equals("bye"));
     }
 }
 
