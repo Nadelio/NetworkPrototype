@@ -37,7 +37,7 @@ public class ServerSide
         do
         {
             string = dataInStream.readUTF();
-            System.out.println("Client Message:" + string);
+            System.out.println("Client Message: " + string);
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             string1 = br.readLine();
             dataOutStream.writeUTF(string1);
