@@ -31,7 +31,7 @@ public class ClientSide
                string = bReader.readLine();
                dataOut.writeUTF(string);
                dataOut.flush();
-               System.out.println("Server Message:" + dataIn.readUTF());
+               System.out.println("Server Message: " + dataIn.readUTF());
             }
             while(!string.equals("stop"));
     }
